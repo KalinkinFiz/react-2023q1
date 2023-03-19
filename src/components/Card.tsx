@@ -57,7 +57,7 @@ class Card extends Component<
     return (
       <div className="card">
         <div className="card-header-wrapper">
-          <div>
+          <div className="card-book">
             <img className="book-img" src={book.image} alt="book image" />
             <p className="book-price">
               <strong>{book.price}</strong>
