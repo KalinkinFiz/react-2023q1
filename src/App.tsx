@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import AboutPage from './pages/AboutPage';
-import HomePage from './pages/HomePage';
-import NotFoundPage from './pages/NotfoundPage';
+import { AboutPage } from './pages/AboutPage';
+import { HomePage } from './pages/HomePage';
+import { FormPage } from './pages/FormPage';
+import { NotFoundPage } from './pages/NotfoundPage';
 
 import './App.css';
 
@@ -14,6 +15,7 @@ class App extends Component {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/form" element={<FormPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </>

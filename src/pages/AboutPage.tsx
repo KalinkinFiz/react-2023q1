@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Header from '../components/Header';
+import { Header } from '../components/Header';
 
-class AboutPage extends Component {
+export class AboutPage extends Component {
   render() {
     return (
       <>
@@ -15,5 +15,3 @@ class AboutPage extends Component {
     );
   }
 }
-
-export default AboutPage;

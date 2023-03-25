@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import { IBook } from '../models/types';
-import Card from './Card';
+import { Card } from './Card';
 
-class Cards extends Component<{ books: IBook[] }> {
+export class Cards extends Component<{ books: IBook[] }> {
   render() {
     return (
       <div className="cards">
@@ -14,5 +14,3 @@ class Cards extends Component<{ books: IBook[] }> {
     );
   }
 }
-
-export default Cards;

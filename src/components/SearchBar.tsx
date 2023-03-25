@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import BooksService from '../services/book.service';
 import { IBook } from '../models/types';
 
-import find from '../assets/find.png';
+import find from '../assets/img/find.png';
 
 export interface SearchBarProps {
   onBooksFetched?: (books: IBook[]) => void;
   hideSearch?: boolean;
 }
 
-class SearchBar extends Component<SearchBarProps, { search: string | null }> {
+export class SearchBar extends Component<SearchBarProps, { search: string | null }> {
   booksService = new BooksService();
 
   constructor(props: SearchBarProps) {
@@ -55,5 +55,3 @@ class SearchBar extends Component<SearchBarProps, { search: string | null }> {
     );
   }
 }
-
-export default SearchBar;
