@@ -58,6 +58,12 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
     });
   };
 
+  onChangeBinding = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    this.setState({
+      binding: event.target.value,
+    });
+  };
+
   onChangeGenre = (event: React.ChangeEvent<HTMLInputElement>) => {
     const genre = new Set([...this.state.genre, event.target.value]);
     this.setState({ genre: [...genre] });
@@ -215,6 +221,15 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
               Pre-Order
             </label>
           </fieldset>
+          <label>
+            Book binding
+            <select value={this.state.binding} onChange={this.onChangeBinding}>
+              <option value="Hard Cover">Hard Cover</option>
+              <option value="SoftBoard">SoftBoard</option>
+              <option value="Adhesive Sew Bond">Adhesive Sew Bond</option>
+              <option value="Integral Binding">Integral Binding</option>
+            </select>
+          </label>
           <input type="file" onChange={this.onChangeFile} required />
           <button>Submit</button>
         </div>
