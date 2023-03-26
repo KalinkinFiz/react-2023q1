@@ -29,7 +29,6 @@ export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
           <p>Genre: {formData.genre.join(', ')}</p>
           <p>Order: {formData.order}</p>
           <p>Binding: {formData.binding}</p>
-          <p>Image: {formData.image}</p>
         </div>
       </div>
     </article>

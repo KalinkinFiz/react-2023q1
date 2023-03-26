@@ -10,7 +10,6 @@ export interface FormState {
   order: string;
   binding: string;
   image: string;
-  radioValue: string;
 }
 
 export class Form extends Component<{ setForm: () => void }, FormState> {
@@ -26,7 +25,6 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
       order: '',
       date: '',
       binding: '',
-      radioValue: '',
     };
   }
 
@@ -54,9 +52,9 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
     this.setState((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  onChangeOrder = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      radioValue: event.target.value,
+      order: event.target.value,
     });
   };
 
@@ -69,10 +67,10 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
     const reader = new FileReader();
     const url = reader.readAsDataURL(event.target.files?.[0] as Blob);
 
-    reader.onloadend = (_e) => {
+    reader.onloadend = () => {
       this.setState({ image: reader.result as string });
     };
-    console.log(url); // Would see a path?
+    console.log(url);
   };
 
   render(): ReactNode {
@@ -190,6 +188,31 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
                 data-heard="Humor"
               />
               Humor
+            </label>
+          </fieldset>
+          <fieldset>
+            <legend>Order</legend>
+            <label>
+              <input
+                name="order"
+                type="radio"
+                value="order"
+                checked={this.state.order === 'order'}
+                onChange={this.onChangeOrder}
+                data-heard="Order"
+              />
+              Order
+            </label>
+            <label>
+              <input
+                name="order"
+                type="radio"
+                value="pre-order"
+                checked={this.state.order === 'pre-order'}
+                onChange={this.onChangeOrder}
+                data-heard="Pre-Order"
+              />
+              Pre-Order
             </label>
           </fieldset>
           <input type="file" onChange={this.onChangeFile} required />
