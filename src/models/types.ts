@@ -13,9 +13,8 @@ export interface IForm {
   subtitle: string;
   price: string;
   date: string;
-  genre: string;
+  genre: string[];
   order: string;
   binding: string;
-  heard: string[];
   image: string;
 }

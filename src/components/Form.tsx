@@ -1,16 +1,16 @@
 import React, { Component, ReactNode } from 'react';
 
-interface FormState {
+export interface FormState {
   isbn13?: string;
   title: string;
   subtitle: string;
   price: string;
   date: string;
-  genre: string;
+  genre: string[];
   order: string;
   binding: string;
   image: string;
-  value: string;
+  radioValue: string;
 }
 
 export class Form extends Component<{ setForm: () => void }, FormState> {
@@ -22,11 +22,11 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
       subtitle: '',
       price: '',
       image: '',
-      genre: '',
+      genre: [],
       order: '',
       date: '',
       binding: '',
-      value: '',
+      radioValue: '',
     };
   }
 
@@ -56,8 +56,23 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
 
   onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      value: event.target.value,
+      radioValue: event.target.value,
     });
+  };
+
+  onChangeGenre = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const genre = new Set([...this.state.genre, event.target.value]);
+    this.setState({ genre: [...genre] });
+  };
+
+  onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+    const url = reader.readAsDataURL(event.target.files?.[0] as Blob);
+
+    reader.onloadend = (_e) => {
+      this.setState({ image: reader.result as string });
+    };
+    console.log(url); // Would see a path?
   };
 
   render(): ReactNode {
@@ -71,7 +86,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
               value={this.state.title}
               onInput={this.onChangeInput}
               type="text"
-              pattern="[A-Z\u0410-\u042f]{1}[a-z\u0430-\u044f]+{1,}"
+              pattern="[A-Z][a-z]{1,40}"
               title="The title must start with a capital letter, and contain more than two characters."
               required
             />
@@ -83,7 +98,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
               value={this.state.subtitle}
               onInput={this.onChangeInput}
               type="text"
-              pattern="[A-Z\u0410-\u042f]{1}[a-z\u0430-\u044f]+{1,}"
+              pattern="[A-Z][a-z]{1,255}"
               title="The description of the book should contain no more than 255 characters."
               required
             />
@@ -95,8 +110,8 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
               value={this.state.price}
               onInput={this.onChangeInput}
               type="text"
-              pattern="[A-Z\u0410-\u042f]{1}[a-z\u0430-\u044f]+{1,}"
-              title=""
+              pattern="^\d+$"
+              title="Only numbers"
               required
             />
           </label>
@@ -119,20 +134,28 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             <label>
               <input
                 name="genre"
-                onChange={this.onChangeInput}
+                value="cookbook"
+                onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Cookbook"
               />
               Cookbook
             </label>
             <label>
-              <input name="genre" onChange={this.onChangeInput} type="checkbox" data-heard="Art" />
+              <input
+                name="genre"
+                value="art"
+                onChange={this.onChangeGenre}
+                type="checkbox"
+                data-heard="Art"
+              />
               Art
             </label>
             <label>
               <input
                 name="genre"
-                onChange={this.onChangeInput}
+                value="self-help"
+                onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Self-help"
               />
@@ -141,7 +164,8 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             <label>
               <input
                 name="genre"
-                onChange={this.onChangeInput}
+                value="development"
+                onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Development"
               />
@@ -150,43 +174,25 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             <label>
               <input
                 name="genre"
-                onChange={this.onChangeInput}
+                value="health"
+                onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Health"
               />
               Health
             </label>
             <label>
-              <input name="genre" type="checkbox" data-heard="Humor" />
+              <input
+                name="genre"
+                value="humor"
+                onChange={this.onChangeGenre}
+                type="checkbox"
+                data-heard="Humor"
+              />
               Humor
             </label>
           </fieldset>
-          <fieldset>
-            <legend>Order</legend>
-            <label>
-              <input
-                name="order"
-                type="radio"
-                value="order"
-                checked={this.state.value === 'order'}
-                onChange={this.onChangeHandler}
-                data-heard="Order"
-              />
-              Order
-            </label>
-            <label>
-              <input
-                name="pre-order"
-                type="radio"
-                value="pre-order"
-                checked={this.state.value === 'pre-order'}
-                onChange={this.onChangeHandler}
-                data-heard="Pre-Order"
-              />
-              Pre-Order
-            </label>
-          </fieldset>
-          <input type="file" required />
+          <input type="file" onChange={this.onChangeFile} required />
           <button>Submit</button>
         </div>
       </form>

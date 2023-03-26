@@ -13,16 +13,23 @@ export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
       <div>
         <h3>{formNumber + 1}</h3>
         <div>
-          <div style={{ backgroundImage: `url(${formData.image})` }}></div>
+          <div
+            style={{
+              backgroundImage: `url(${formData.image})`,
+              height: '100px',
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+            }}
+          ></div>
           <p>Title: {formData.title}</p>
           <p>Subtitle: {formData.subtitle}</p>
-          <p>Price: {formData.price}</p>
+          <p>Price: {formData.price}$</p>
           <p>Date: {formData.date}</p>
-          <p>Genre: {formData.genre}</p>
+          <p>Genre: {formData.genre.join(', ')}</p>
           <p>Order: {formData.order}</p>
           <p>Binding: {formData.binding}</p>
-          {/* <p>Image: {formData.image}</p> */}
-          {/* <p>Heard from: {formData.heard.join(', ')}</p> */}
+          <p>Image: {formData.image}</p>
         </div>
       </div>
     </article>
