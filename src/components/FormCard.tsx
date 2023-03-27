@@ -21,6 +21,7 @@ export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
               backgroundSize: 'cover',
             }}
           ></div>
+          {/* <p>Image: {formData.image}</p> */}
           <p>Title: {formData.title}</p>
           <p>Subtitle: {formData.subtitle}</p>
           <p>Price: {formData.price} $</p>

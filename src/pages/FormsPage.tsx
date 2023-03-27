@@ -9,14 +9,17 @@ import { IForm } from '../models/types';
 export class FormsPage extends Component<Record<string, never>, { forms: IForm[] }> {
   constructor(props: Record<string, never>) {
     super(props);
+
+    const forms = localStorage.getItem('forms') || '[]';
     this.state = {
-      forms: JSON.parse(localStorage.forms || '[]'),
+      forms: JSON.parse(forms),
     };
     this.setForm = this.setForm.bind(this);
   }
 
   setForm() {
-    this.setState({ forms: JSON.parse(localStorage.forms) });
+    const forms = localStorage.getItem('forms');
+    forms && this.setState({ forms: JSON.parse(forms) });
   }
 
   render() {

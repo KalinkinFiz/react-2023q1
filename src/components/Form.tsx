@@ -11,8 +11,12 @@ export interface FormState {
   image: string;
 }
 
-export class Form extends Component<{ setForm: () => void }, FormState> {
-  constructor(props: { setForm: () => void }) {
+interface FormProps {
+  setForm: () => void;
+}
+
+export class Form extends Component<FormProps, FormState> {
+  constructor(props: FormProps) {
     super(props);
 
     this.state = {
@@ -27,6 +31,8 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
     };
   }
 
+  genreRef = React.createRef();
+
   getDate(): string {
     const date = new Date();
     return `${date.getFullYear()}-${date.getMonth().toString().padStart(2, '0')}-${date
@@ -37,18 +43,13 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
 
   submitForm(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!localStorage.getItem('forms')) {
-      localStorage.setItem('forms', JSON.stringify([this.state]));
+    const oldForms = JSON.parse(localStorage.getItem('forms') || '[]');
 
-      this.props.setForm();
-      return;
-    }
+    const forms = [...oldForms, this.state];
+    localStorage.setItem('forms', JSON.stringify(forms));
 
-    localStorage.setItem(
-      'forms',
-      JSON.stringify([...JSON.parse(localStorage.getItem('forms')!), this.state])
-    );
     this.props.setForm();
+    this.handleClickReset();
   }
 
   onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +80,31 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
     reader.onloadend = () => {
       this.setState({ image: reader.result as string });
     };
+
+    // const file = event.target.files?.[0];
+    // this.setState({ image: file?.name || '' });
+  };
+
+  handleClickReset = () => {
+    this.setState({
+      title: '',
+      subtitle: '',
+      price: '',
+      image: '',
+      genre: [],
+      order: '',
+      date: this.getDate(),
+      binding: 'Hard Cover',
+    });
+  };
+
+  handleClickDeleteAll = () => {
+    localStorage.removeItem('forms');
+    this.props.setForm();
+  };
+
+  hasGenreChecked = (value: string) => {
+    return this.state.genre.findIndex((genre) => genre === value) !== -1;
   };
 
   render(): ReactNode {
@@ -149,6 +175,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
                 onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Cookbook"
+                checked={this.hasGenreChecked('cookbook')}
               />
               Cookbook
             </label>
@@ -160,6 +187,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
                 onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Art"
+                checked={this.hasGenreChecked('art')}
               />
               Art
             </label>
@@ -171,6 +199,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
                 onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Self-help"
+                checked={this.hasGenreChecked('self-help')}
               />
               Self-help
             </label>
@@ -182,6 +211,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
                 onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Development"
+                checked={this.hasGenreChecked('development')}
               />
               Development
             </label>
@@ -193,6 +223,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
                 onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Health"
+                checked={this.hasGenreChecked('health')}
               />
               Health
             </label>
@@ -204,6 +235,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
                 onChange={this.onChangeGenre}
                 type="checkbox"
                 data-heard="Humor"
+                checked={this.hasGenreChecked('humor')}
               />
               Humor
             </label>
@@ -245,7 +277,16 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             </select>
           </label>
           <input type="file" onChange={this.onChangeFile} required />
-          <button className="button-submit">Submit</button>
+
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <button className="button-submit">Submit</button>
+            {/* <button className="button-submit" onClick={this.handleClickReset}>
+              Reset
+            </button>
+            <button className="button-submit" onClick={this.handleClickDeleteAll}>
+              Delete All Cards
+            </button> */}
+          </div>
         </div>
       </form>
     );
