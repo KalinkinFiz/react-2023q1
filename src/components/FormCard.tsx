@@ -23,7 +23,7 @@ export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
           ></div>
           <p>Title: {formData.title}</p>
           <p>Subtitle: {formData.subtitle}</p>
-          <p>Price: {formData.price}$</p>
+          <p>Price: {formData.price} $</p>
           <p>Date: {formData.date}</p>
           <p>Genre: {formData.genre.join(', ')}</p>
           <p>Order: {formData.order}</p>

@@ -1,7 +1,6 @@
 import React, { Component, ReactNode } from 'react';
 
 export interface FormState {
-  isbn13?: string;
   title: string;
   subtitle: string;
   price: string;
@@ -23,8 +22,8 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
       image: '',
       genre: [],
       order: '',
-      date: '',
-      binding: '',
+      date: this.getDate(),
+      binding: 'Hard Cover',
     };
   }
 
@@ -36,15 +35,19 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
       .padStart(2, '0')}`;
   }
 
-  submitForm(event: React.FormEvent) {
+  submitForm(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!localStorage.getItem('forms')) {
       localStorage.setItem('forms', JSON.stringify([this.state]));
+
       this.props.setForm();
       return;
     }
 
-    localStorage.forms = JSON.stringify([...JSON.parse(localStorage.forms), this.state]);
+    localStorage.setItem(
+      'forms',
+      JSON.stringify([...JSON.parse(localStorage.getItem('forms')!), this.state])
+    );
     this.props.setForm();
   }
 
@@ -71,12 +74,11 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
 
   onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
-    const url = reader.readAsDataURL(event.target.files?.[0] as Blob);
+    reader.readAsDataURL(event.target.files?.[0] as Blob);
 
     reader.onloadend = () => {
       this.setState({ image: reader.result as string });
     };
-    console.log(url);
   };
 
   render(): ReactNode {
