@@ -10,16 +10,15 @@ interface IFormCardProps {
 export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
   return (
     <article>
-      <div>
+      <div className="form-cards">
         <h3>{formNumber + 1}</h3>
-        <div>
+        <div className="form-card-output">
           <div
             style={{
-              backgroundImage: `url(${formData.image})`,
-              height: '100px',
-              backgroundSize: 'contain',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
+              background: `url(${formData.image}), no-repeat`,
+              height: '200px',
+              width: '200px',
+              backgroundSize: 'cover',
             }}
           ></div>
           <p>Title: {formData.title}</p>

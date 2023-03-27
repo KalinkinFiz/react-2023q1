@@ -38,7 +38,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
 
   submitForm(event: React.FormEvent) {
     event.preventDefault();
-    if (!localStorage.forms) {
+    if (!localStorage.getItem('forms')) {
       localStorage.setItem('forms', JSON.stringify([this.state]));
       this.props.setForm();
       return;
@@ -82,10 +82,11 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
   render(): ReactNode {
     return (
       <form onSubmit={(e) => this.submitForm(e)} className="form">
-        <div>
+        <div className="form-submit">
           <label>
             Title of the book
             <input
+              className="input-form"
               name="title"
               value={this.state.title}
               onInput={this.onChangeInput}
@@ -98,6 +99,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
           <label>
             Description
             <input
+              className="input-form"
               name="subtitle"
               value={this.state.subtitle}
               onInput={this.onChangeInput}
@@ -110,6 +112,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
           <label>
             Price
             <input
+              className="input-form"
               name="price"
               value={this.state.price}
               onInput={this.onChangeInput}
@@ -123,6 +126,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             <label>
               Date of publication
               <input
+                className="input-form"
                 name="date"
                 defaultValue={this.state.date}
                 onInput={this.onChangeInput}
@@ -137,6 +141,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             <legend>Genre</legend>
             <label>
               <input
+                className="input-form"
                 name="genre"
                 value="cookbook"
                 onChange={this.onChangeGenre}
@@ -147,6 +152,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             </label>
             <label>
               <input
+                className="input-form"
                 name="genre"
                 value="art"
                 onChange={this.onChangeGenre}
@@ -157,6 +163,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             </label>
             <label>
               <input
+                className="input-form"
                 name="genre"
                 value="self-help"
                 onChange={this.onChangeGenre}
@@ -167,6 +174,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             </label>
             <label>
               <input
+                className="input-form"
                 name="genre"
                 value="development"
                 onChange={this.onChangeGenre}
@@ -177,6 +185,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             </label>
             <label>
               <input
+                className="input-form"
                 name="genre"
                 value="health"
                 onChange={this.onChangeGenre}
@@ -187,6 +196,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             </label>
             <label>
               <input
+                className="input-form"
                 name="genre"
                 value="humor"
                 onChange={this.onChangeGenre}
@@ -200,21 +210,23 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             <legend>Order</legend>
             <label>
               <input
+                className="input-form"
                 name="order"
                 type="radio"
-                value="order"
-                checked={this.state.order === 'order'}
+                value="Can be ordered"
+                checked={this.state.order === 'Can be ordered'}
                 onChange={this.onChangeOrder}
                 data-heard="Order"
               />
-              Order
+              Can be ordered
             </label>
             <label>
               <input
+                className="input-form"
                 name="order"
                 type="radio"
-                value="pre-order"
-                checked={this.state.order === 'pre-order'}
+                value="Pre-order"
+                checked={this.state.order === 'Pre-order'}
                 onChange={this.onChangeOrder}
                 data-heard="Pre-Order"
               />
@@ -231,7 +243,7 @@ export class Form extends Component<{ setForm: () => void }, FormState> {
             </select>
           </label>
           <input type="file" onChange={this.onChangeFile} required />
-          <button>Submit</button>
+          <button className="button-submit">Submit</button>
         </div>
       </form>
     );

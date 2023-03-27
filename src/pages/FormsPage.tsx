@@ -28,7 +28,7 @@ export class FormsPage extends Component<Record<string, never>, { forms: IForm[]
           <Form setForm={this.setForm} />
           <div>
             <p>Submited forms</p>
-            <div>
+            <div className="form-card">
               {this.state.forms.map((form, i) => {
                 return <FormCard formData={form} formNumber={i} key={i} />;
               })}
