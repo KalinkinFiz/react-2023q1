@@ -47,6 +47,7 @@ export class Form extends Component<FormProps, FormState> {
 
     const forms = [...oldForms, this.state];
     localStorage.setItem('forms', JSON.stringify(forms));
+    alert('Form created');
 
     this.props.setForm();
     this.handleClickReset();
