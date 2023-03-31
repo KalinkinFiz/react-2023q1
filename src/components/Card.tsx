@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import { IBook } from '../models/types';
 
-import views from '../assets/eye.png';
-import like from '../assets/like.png';
+import views from '../assets/img/eye.png';
+import like from '../assets/img/like.png';
 
-class Card extends Component<
+export class Card extends Component<
   { book: IBook; key: string },
   {
     likes: number;
@@ -96,5 +96,3 @@ class Card extends Component<
     );
   }
 }
-
-export default Card;
