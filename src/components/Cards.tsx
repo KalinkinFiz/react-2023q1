@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 
 import { IBook } from '../models/types';
-import { Card } from './Card';
+import Card from './Card';
 
-interface IProps {
+interface ICardsProps {
   books: IBook[];
 }
 
-export const Cards: FC<IProps> = ({ books }) => {
+export const Cards: FC<ICardsProps> = ({ books }) => {
   return (
     <div className="cards">
       {books.map((book) => {
