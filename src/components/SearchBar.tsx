@@ -1,57 +1,62 @@
-import React, { Component } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import BooksService from '../services/book.service';
 import { IBook } from '../models/types';
 
 import find from '../assets/img/find.png';
 
-export interface SearchBarProps {
+export interface ISearchBarProps {
   onBooksFetched?: (books: IBook[]) => void;
   hideSearch?: boolean;
 }
 
-export class SearchBar extends Component<SearchBarProps, { search: string | null }> {
-  booksService = new BooksService();
+interface ISearchProps {
+  search: string | null;
+}
 
-  constructor(props: SearchBarProps) {
-    super(props);
-    this.state = { search: localStorage.getItem('search') };
-  }
+const SearchBar: FC<ISearchBarProps> = (props) => {
+  const [state, setState] = useState<ISearchProps>({
+    search: localStorage.getItem('search'),
+  });
 
-  componentWillUnmount(): void {
-    localStorage.setItem('search', String(this.state.search));
-  }
+  const booksService = new BooksService();
 
-  handleSearchClick = () => {
-    if (!this.state.search) return;
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('search', String(state.search));
+    };
+  }, [state.search]);
 
-    if (typeof Number(this.state.search) === 'number' && this.state.search.length === 13) {
-      this.booksService.getBook(this.state.search).then((book) => this.handleBooksFetched([book]));
+  const handleSearchClick = () => {
+    if (!state.search) return;
+
+    if (typeof Number(state.search) === 'number' && state.search.length === 13) {
+      booksService.getBook(state.search).then((book) => handleBooksFetched([book]));
     } else {
-      this.booksService.getBooks(this.state.search).then((books) => this.handleBooksFetched(books));
+      booksService.getBooks(state.search).then((books) => handleBooksFetched(books));
     }
   };
 
-  handleBooksFetched(books: IBook[]) {
+  const handleBooksFetched = (books: IBook[]) => {
     console.log(books);
-    if (this.props.onBooksFetched) this.props.onBooksFetched(books);
-  }
+    if (props.onBooksFetched) props.onBooksFetched(books);
+  };
 
-  render() {
-    return (
-      <div className="search">
-        <div className="search-bar">
-          <img className="search-img" src={find} alt="find" />
-          <input
-            type="search"
-            value={this.state.search || ''}
-            onChange={(e) => this.setState({ search: e.target.value })}
-          />
-        </div>
-        <button className="btn" onClick={this.handleSearchClick}>
-          Search
-        </button>
+  return (
+    <div className="search">
+      <div className="search-bar">
+        <img className="search-img" src={find} alt="find" />
+        <input
+          type="search"
+          value={state.search || ''}
+          onChange={(e) => setState({ search: e.target.value })}
+        />
       </div>
-    );
-  }
-}
+      <button className="btn" onClick={handleSearchClick}>
+        Search
+      </button>
+    </div>
+  );
+};
+
+export default SearchBar;
