@@ -7,7 +7,7 @@ interface IFormCardProps {
   formNumber: number;
 }
 
-export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
+const FormCard = ({ formData, formNumber }: IFormCardProps) => {
   return (
     <article>
       <div className="form-cards">
@@ -34,3 +34,5 @@ export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
     </article>
   );
 };
+
+export default FormCard;

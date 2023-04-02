@@ -7,7 +7,7 @@ interface ICardsProps {
   books: IBook[];
 }
 
-export const Cards: FC<ICardsProps> = ({ books }) => {
+const Cards: FC<ICardsProps> = ({ books }) => {
   return (
     <div className="cards">
       {books.map((book) => {
@@ -16,3 +16,5 @@ export const Cards: FC<ICardsProps> = ({ books }) => {
     </div>
   );
 };
+
+export default Cards;
