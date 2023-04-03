@@ -1,9 +1,8 @@
 import React from 'react';
-
-import { IForm } from '../models/types';
+import { FieldValues } from 'react-hook-form';
 
 interface IFormCardProps {
-  formData: IForm;
+  formData: FieldValues;
   formNumber: number;
 }
 
