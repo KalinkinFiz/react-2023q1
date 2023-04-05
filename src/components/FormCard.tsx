@@ -1,8 +1,9 @@
 import React from 'react';
-import { FieldValues } from 'react-hook-form';
+
+import { IFormState } from './Form';
 
 interface IFormCardProps {
-  formData: FieldValues;
+  formData: IFormState;
   formNumber: number;
 }
 
@@ -14,13 +15,12 @@ const FormCard = ({ formData, formNumber }: IFormCardProps) => {
         <div className="form-card-output">
           <div
             style={{
-              background: `url(${formData.image}), no-repeat`,
+              background: `url(${URL.createObjectURL(formData.image[0])}), no-repeat`,
               height: '200px',
               width: '200px',
               backgroundSize: 'cover',
             }}
           ></div>
-          {/* <p>Image: {formData.image}</p> */}
           <p>Title: {formData.title}</p>
           <p>Subtitle: {formData.subtitle}</p>
           <p>Price: {formData.price} $</p>

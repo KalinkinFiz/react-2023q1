@@ -4,34 +4,25 @@ import Header from '../components/Header';
 import Form from '../components/Form';
 import FormCard from '../components/FormCard';
 
-import { IForm } from '../models/types';
-
-interface IFormState {
-  forms: IForm[];
-}
+import { IFormState } from '../components/Form';
 
 export const FormsPage: FC = () => {
-  const forms = localStorage.getItem('forms') || '[]';
-
-  const [state, setState] = useState<IFormState>({
-    forms: JSON.parse(forms),
-  });
-
-  const setForm = () => {
-    const forms = localStorage.getItem('forms');
-    forms && setState({ forms: JSON.parse(forms) });
-  };
-
+  const [cards, setCards] = useState<IFormState[]>([]);
   return (
     <>
       <Header hideSearch={true} />
       <div>
         <h1>Forms Page</h1>
-        <Form setForm={setForm} />
+        <Form
+          setForm={(card) => {
+            card.image = { ...card.image };
+            setCards([...cards, card]);
+          }}
+        />
         <div>
           <p>Submited forms</p>
           <div className="form-card">
-            {state.forms.map((form, i) => {
+            {cards.map((form, i) => {
               return <FormCard formData={form} formNumber={i} key={i} />;
             })}
           </div>
