@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { IForm } from '../models/types';
+import { IFormState } from './Form';
 
 interface IFormCardProps {
-  formData: IForm;
+  formData: IFormState;
   formNumber: number;
 }
 
-export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
+const FormCard = ({ formData, formNumber }: IFormCardProps) => {
   return (
     <article>
       <div className="form-cards">
@@ -15,13 +15,12 @@ export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
         <div className="form-card-output">
           <div
             style={{
-              background: `url(${formData.image}), no-repeat`,
+              background: `url(${URL.createObjectURL(formData.image[0])}), no-repeat`,
               height: '200px',
               width: '200px',
               backgroundSize: 'cover',
             }}
           ></div>
-          {/* <p>Image: {formData.image}</p> */}
           <p>Title: {formData.title}</p>
           <p>Subtitle: {formData.subtitle}</p>
           <p>Price: {formData.price} $</p>
@@ -34,3 +33,5 @@ export const FormCard = ({ formData, formNumber }: IFormCardProps) => {
     </article>
   );
 };
+
+export default FormCard;
