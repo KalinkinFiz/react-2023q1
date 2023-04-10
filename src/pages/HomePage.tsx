@@ -2,10 +2,11 @@ import React, { FC, useState } from 'react';
 
 import Header from '../components/Header';
 import Cards from '../components/Cards';
-import { ProgressBar } from '../components/ProgressBar';
+import ProgressBar from '../components/ProgressBar';
 
 import { IBook } from '../models/types';
 import { books } from '../data/data';
+import noContent from '../assets/img/no_content.jpg';
 
 interface IHomePageProps {
   books: IBook[];
@@ -38,7 +39,11 @@ export const HomePage: FC = () => {
       </div>
 
       {state.loading ? <ProgressBar /> : <Cards books={state.books} />}
-      {!state.loading && state.books.length === 0 && <p>No content</p>}
+      {!state.loading && state.books.length === 0 && (
+        <div className="progress-no-content">
+          <img className="no-content" src={noContent} alt="no content" />
+        </div>
+      )}
     </>
   );
 };
