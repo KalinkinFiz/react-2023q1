@@ -12,12 +12,12 @@ export interface ISearchBarProps {
 }
 
 interface ISearchState {
-  search: string | null;
+  search: string;
 }
 
 const SearchBar: FC<ISearchBarProps> = (props) => {
   const [state, setState] = useState<ISearchState>({
-    search: localStorage.getItem('search'),
+    search: localStorage.getItem('search') || '',
   });
 
   const booksService = new BooksService();
