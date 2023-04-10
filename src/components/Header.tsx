@@ -6,6 +6,7 @@ import SearchBar from './SearchBar';
 
 interface IHeaderProps {
   onBooksFetched?: (books: IBook[]) => void;
+  onBooksStartFetch?: () => void;
   hideSearch: boolean;
 }
 
@@ -18,7 +19,12 @@ const Header: FC<IHeaderProps> = (props) => {
           <Link to="/about">About</Link>
           <Link to="/form">Forms</Link>
         </div>
-        {!props.hideSearch && <SearchBar onBooksFetched={props.onBooksFetched} />}
+        {!props.hideSearch && (
+          <SearchBar
+            onBooksFetched={props.onBooksFetched}
+            onBooksStartFetch={props.onBooksStartFetch}
+          />
+        )}
       </header>
     </>
   );
