@@ -7,16 +7,17 @@ import find from '../assets/img/find.png';
 
 export interface ISearchBarProps {
   onBooksFetched?: (books: IBook[]) => void;
+  onBooksStartFetch?: () => void;
   hideSearch?: boolean;
 }
 
-interface ISearchProps {
-  search: string | null;
+interface ISearchState {
+  search: string;
 }
 
 const SearchBar: FC<ISearchBarProps> = (props) => {
-  const [state, setState] = useState<ISearchProps>({
-    search: localStorage.getItem('search'),
+  const [state, setState] = useState<ISearchState>({
+    search: localStorage.getItem('search') || '',
   });
 
   const booksService = new BooksService();
@@ -30,6 +31,8 @@ const SearchBar: FC<ISearchBarProps> = (props) => {
   const handleSearchClick = () => {
     if (!state.search) return;
 
+    props.onBooksStartFetch?.();
+
     if (typeof Number(state.search) === 'number' && state.search.length === 13) {
       booksService.getBook(state.search).then((book) => handleBooksFetched([book]));
     } else {
@@ -38,7 +41,6 @@ const SearchBar: FC<ISearchBarProps> = (props) => {
   };
 
   const handleBooksFetched = (books: IBook[]) => {
-    console.log(books);
     if (props.onBooksFetched) props.onBooksFetched(books);
   };
 
