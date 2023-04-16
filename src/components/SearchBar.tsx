@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import BooksService from '../services/book.service';
 import { IBook } from '../models/types';
+import { RootState } from '../redux/store';
+import { setSearch } from '../redux/reducers';
 
 import find from '../assets/img/find.png';
 
@@ -16,17 +19,19 @@ interface ISearchState {
 }
 
 const SearchBar: FC<ISearchBarProps> = (props) => {
+  const dispatch = useDispatch();
+
   const [state, setState] = useState<ISearchState>({
-    search: localStorage.getItem('search') || '',
+    search: useSelector((state: RootState) => state.search) || '',
   });
 
   const booksService = new BooksService();
 
   useEffect(() => {
     return () => {
-      localStorage.setItem('search', String(state.search));
+      dispatch(setSearch(String(state.search)));
     };
-  }, [state.search]);
+  }, [dispatch, state.search]);
 
   const handleSearchClick = () => {
     if (!state.search) return;
