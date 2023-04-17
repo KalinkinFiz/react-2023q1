@@ -9,4 +9,4 @@ export const booksAPI = createApi({
   }),
 });
 
-export const { useGetBooksQuery, useGetBookByIdQuery } = booksAPI;
+export const { useGetBooksQuery, useLazyGetBooksQuery, useGetBookByIdQuery } = booksAPI;
