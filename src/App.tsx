@@ -18,7 +18,7 @@ const App: FC = () => {
         <Routes>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
-          <Route path="forms" element={<FormsPage />} />
+          <Route path="form" element={<FormsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Provider>
