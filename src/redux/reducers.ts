@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FieldValues } from 'react-hook-form';
+
+import { IFormState } from '../components/Form';
 
 export interface ProductsState {
   search: string;
-  formProducts: FieldValues[];
+  formBooks: IFormState[];
 }
 
 const initialState: ProductsState = {
   search: '',
-  formProducts: [],
+  formBooks: [],
 };
 
 const appSlice = createSlice({
@@ -18,13 +19,13 @@ const appSlice = createSlice({
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
     },
-    setFormProducts: (state, action: PayloadAction<FieldValues>) => {
-      state.formProducts = [...state.formProducts, action.payload];
+    setFormBooks: (state, action: PayloadAction<IFormState>) => {
+      state.formBooks = [...state.formBooks, action.payload];
     },
   },
 });
 
 const { actions, reducer } = appSlice;
 
-export const { setSearch } = actions;
+export const { setSearch, setFormBooks } = actions;
 export default reducer;
