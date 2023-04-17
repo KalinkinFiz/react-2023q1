@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
 import BooksService from '../services/book.service';
 import { IBook } from '../models/types';
-import { RootState } from '../redux/store';
+
+import { useAppSelector, useAppDispatch } from '../redux/store';
 import { setSearch } from '../redux/reducers';
 
 import find from '../assets/img/find.png';
@@ -19,10 +19,10 @@ interface ISearchState {
 }
 
 const SearchBar: FC<ISearchBarProps> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [state, setState] = useState<ISearchState>({
-    search: useSelector((state: RootState) => state.search) || '',
+    search: useAppSelector((state) => state.search) || '',
   });
 
   const booksService = new BooksService();
