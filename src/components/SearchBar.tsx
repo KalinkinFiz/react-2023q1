@@ -1,9 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { IBook } from '../models/types';
 
 import find from '../assets/img/find.png';
+
 import { useLazyGetBooksQuery } from '../redux/book.api';
+import { useAppSelector, useAppDispatch } from '../redux/store';
+import { setSearch } from '../redux/reducers';
 
 export interface ISearchBarProps {
   onBooksFetched?: (books: IBook[]) => void;
@@ -16,20 +19,18 @@ interface ISearchState {
 }
 
 const SearchBar: FC<ISearchBarProps> = (props) => {
+  const dispatch = useAppDispatch();
   const [getBooks] = useLazyGetBooksQuery();
 
   const [state, setState] = useState<ISearchState>({
-    search: '',
-    // search: useAppSelector((state) => state.search) || '',
+    search: useAppSelector((state) => state.app.search) || '',
   });
 
-  // const booksService = new BooksService();
-
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(setSearch(String(state.search)));
-  //   };
-  // }, [dispatch, state.search]);
+  useEffect(() => {
+    return () => {
+      dispatch(setSearch(String(state.search)));
+    };
+  }, [dispatch, state.search]);
 
   const handleSearchClick = async () => {
     if (!state.search) return;
@@ -39,12 +40,6 @@ const SearchBar: FC<ISearchBarProps> = (props) => {
     const { books } = await getBooks(state.search).unwrap();
 
     handleBooksFetched(books as IBook[]);
-
-    // if (typeof Number(state.search) === 'number' && state.search.length === 13) {
-    //   booksService.getBook(state.search).then((book) => handleBooksFetched([book]));
-    // } else {
-    //   booksService.getBooks(state.search).then((books) => handleBooksFetched(books));
-    // }
   };
 
   const handleBooksFetched = (books: IBook[]) => {
