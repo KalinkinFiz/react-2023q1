@@ -1,10 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-import reducer from './reducers';
+import appReducer from './reducers';
+import { booksAPI } from './book.api';
 
 const store = configureStore({
-  reducer: reducer,
+  reducer: {
+    app: appReducer,
+    [booksAPI.reducerPath]: booksAPI.reducer,
+  },
+  middleware: (gDM) => gDM().concat([booksAPI.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,12 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
-import BooksService from '../services/book.service';
 import { IBook } from '../models/types';
 
-import { useAppSelector, useAppDispatch } from '../redux/store';
-import { setSearch } from '../redux/reducers';
-
 import find from '../assets/img/find.png';
+import { useLazyGetBooksQuery } from '../redux/book.api';
 
 export interface ISearchBarProps {
   onBooksFetched?: (books: IBook[]) => void;
@@ -19,30 +16,35 @@ interface ISearchState {
 }
 
 const SearchBar: FC<ISearchBarProps> = (props) => {
-  const dispatch = useAppDispatch();
+  const [getBooks] = useLazyGetBooksQuery();
 
   const [state, setState] = useState<ISearchState>({
-    search: useAppSelector((state) => state.search) || '',
+    search: '',
+    // search: useAppSelector((state) => state.search) || '',
   });
 
-  const booksService = new BooksService();
+  // const booksService = new BooksService();
 
-  useEffect(() => {
-    return () => {
-      dispatch(setSearch(String(state.search)));
-    };
-  }, [dispatch, state.search]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(setSearch(String(state.search)));
+  //   };
+  // }, [dispatch, state.search]);
 
-  const handleSearchClick = () => {
+  const handleSearchClick = async () => {
     if (!state.search) return;
 
     props.onBooksStartFetch?.();
 
-    if (typeof Number(state.search) === 'number' && state.search.length === 13) {
-      booksService.getBook(state.search).then((book) => handleBooksFetched([book]));
-    } else {
-      booksService.getBooks(state.search).then((books) => handleBooksFetched(books));
-    }
+    const { books } = await getBooks(state.search).unwrap();
+
+    handleBooksFetched(books as IBook[]);
+
+    // if (typeof Number(state.search) === 'number' && state.search.length === 13) {
+    //   booksService.getBook(state.search).then((book) => handleBooksFetched([book]));
+    // } else {
+    //   booksService.getBooks(state.search).then((books) => handleBooksFetched(books));
+    // }
   };
 
   const handleBooksFetched = (books: IBook[]) => {
