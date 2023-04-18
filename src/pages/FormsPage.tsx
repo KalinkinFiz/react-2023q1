@@ -7,7 +7,7 @@ import FormCard from '../components/FormCard';
 import { useAppSelector } from '../redux/store';
 
 export const FormsPage: FC = () => {
-  const formBooks = useAppSelector((state) => state.formBooks);
+  const formBooks = useAppSelector((state) => state.app.formBooks);
 
   return (
     <>

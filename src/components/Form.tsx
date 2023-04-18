@@ -26,6 +26,18 @@ const Form: FC = () => {
   } = useForm<IFormState>();
 
   const submitForm: SubmitHandler<IFormState> = (data) => {
+    const { image } = data;
+
+    const nonSerialized = image as unknown as FileList;
+
+    const imageAsArray = [...nonSerialized];
+
+    const serializedImage = imageAsArray.map((file) => {
+      console.log(file);
+      return URL.createObjectURL(file);
+    })[0];
+    data.image = serializedImage || '';
+
     dispatch(setFormBooks(data));
 
     alert('Form created');
