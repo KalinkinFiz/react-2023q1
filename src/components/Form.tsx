@@ -1,6 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { setFormBooks } from '../redux/reducers';
+import { useAppDispatch } from '../redux/store';
+
 export interface IFormState {
   title: string;
   subtitle: string;
@@ -9,14 +12,12 @@ export interface IFormState {
   genre: string[];
   order: string;
   binding: string;
-  image: FileList;
+  image: string;
 }
 
-interface IFormProps {
-  setForm: (data: IFormState) => void;
-}
+const Form: FC = () => {
+  const dispatch = useAppDispatch();
 
-const Form: FC<IFormProps> = (props) => {
   const {
     register,
     handleSubmit,
@@ -25,7 +26,20 @@ const Form: FC<IFormProps> = (props) => {
   } = useForm<IFormState>();
 
   const submitForm: SubmitHandler<IFormState> = (data) => {
-    props.setForm(data);
+    const { image } = data;
+
+    const nonSerialized = image as unknown as FileList;
+
+    const imageAsArray = [...nonSerialized];
+
+    const serializedImage = imageAsArray.map((file) => {
+      console.log(file);
+      return URL.createObjectURL(file);
+    })[0];
+    data.image = serializedImage || '';
+
+    dispatch(setFormBooks(data));
+
     alert('Form created');
   };
 

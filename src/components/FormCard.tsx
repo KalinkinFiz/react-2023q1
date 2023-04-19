@@ -15,7 +15,7 @@ const FormCard = ({ formData, formNumber }: IFormCardProps) => {
         <div className="form-card-output">
           <div
             style={{
-              background: `url(${URL.createObjectURL(formData.image[0])}), no-repeat`,
+              background: `url(${formData.image}), no-repeat`,
               height: '200px',
               width: '200px',
               backgroundSize: 'cover',
