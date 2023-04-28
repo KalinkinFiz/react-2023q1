@@ -32,9 +32,9 @@ const SearchBar: FC<ISearchBarProps> = (props) => {
     };
   }, [dispatch, state.search]);
 
-  useEffect(() => {
-    if (state.search) handleSearchClick();
-  }, [state.search]);
+  // useEffect(() => {
+  //   if (state.search) handleSearchClick();
+  // }, [state.search]);
 
   const handleSearchClick = async () => {
     if (!state.search) return;
