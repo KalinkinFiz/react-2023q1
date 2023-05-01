@@ -27,9 +27,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "./jest-setup.ts",
-    "src/vite.config.ts"
+    "./src/**/*",
+    "vite.config.ts"
   ],
   "references": [
     {
