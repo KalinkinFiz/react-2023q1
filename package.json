@@ -22,8 +22,10 @@
   },
   "scripts": {
     "dev": "ts-node server",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build --ssrManifest --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "serve": "vite preview",
     "test": "vitest run --coverage",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
     "format": "prettier --write src/**/*.{ts,tsx,scss,css,json}"
