@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { IBook } from '../models/types';
 import Card from './Card';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { IFormState } from './Form';
 
 interface IFormCardProps {

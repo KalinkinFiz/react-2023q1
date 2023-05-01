@@ -1,5 +1,3 @@
-import React from 'react';
-
 import progressBar from '../assets/img/progress.gif';
 
 const ProgressBar = () => {
