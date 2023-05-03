@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 
 import { IBook } from '../models/types';
 import Modal from './Modal';

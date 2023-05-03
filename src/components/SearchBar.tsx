@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { IBook } from '../models/types';
 
@@ -32,9 +32,9 @@ const SearchBar: FC<ISearchBarProps> = (props) => {
     };
   }, [dispatch, state.search]);
 
-  useEffect(() => {
-    if (state.search) handleSearchClick();
-  }, [state.search]);
+  // useEffect(() => {
+  //   if (state.search) handleSearchClick();
+  // }, [state.search]);
 
   const handleSearchClick = async () => {
     if (!state.search) return;
